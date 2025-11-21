@@ -1,29 +1,47 @@
 // src/app.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config'; // <-- ADD ConfigService
+import { CacheModule } from '@nestjs/cache-manager'; // <-- ADD CacheModule
+import * as redisStore from 'cache-manager-redis-store'; // <-- ADD Redis Store Library
+
 import { AuthModule } from './auth/auth.module';
+import { BookingModule } from './booking/booking.module';
 
 @Module({
   imports: [
     // 1. Load .env variables globally
     ConfigModule.forRoot({ isGlobal: true }), 
     
-    // 2. Set up PostgreSQL connection (This provides the DataSource)
+    // 2. Set up PostgreSQL connection
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost', // Or 'postgres' if running NestJS inside Docker later
+      host: 'localhost', 
       port: parseInt(process.env.POSTGRES_PORT || '5432', 10),      
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      // IMPORTANT: Tell TypeORM where to find entities, or use autoLoadEntities
       autoLoadEntities: true, 
-      synchronize: true, // Use false and migrations in production!
+      synchronize: true, 
+    }),
+
+    // 3. Configure Redis Caching Module (Critical for Latency/Scale)
+    CacheModule.registerAsync({
+      isGlobal: true, // Make Cache Manager available everywhere
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        store: redisStore,
+        // Host and Port are read from the .env file
+        host: configService.get<string>('REDIS_HOST') || 'localhost',
+        port: parseInt(configService.get<string>('REDIS_PORT') || '6379'),
+        ttl: 60 * 1000, // Cache TTL (Time-To-Live) of 60 seconds
+      }),
+      inject: [ConfigService],
     }),
     
-    // 3. Import the Auth Module
+    // 4. Import application modules
     AuthModule,
+    BookingModule,
   ],
 })
 export class AppModule {}
