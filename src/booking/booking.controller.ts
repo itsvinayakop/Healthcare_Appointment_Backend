@@ -65,7 +65,6 @@ export class BookingController {
     // We override the global guards by placing @UseGuards() with no arguments, or by placing this endpoint in an open module.
     // For simplicity, we will assume this GET endpoint is *not* protected by the global guards if called without a token.
     @Get('slots/search')
-    // If the controller had NO global guards, we'd add @UsePipes here.
     @Public()
     @HttpCode(HttpStatus.OK)
     async searchAvailability(
@@ -76,7 +75,6 @@ export class BookingController {
             throw new BadRequestException('Specialty and date are required for search.');
         }
 
-        // This is the CRITICAL endpoint for p95 < 200ms reads, handled by caching in the service.
         return this.bookingService.findAvailableSlots(specialty, date);
     }
 

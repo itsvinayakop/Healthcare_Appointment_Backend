@@ -7,6 +7,8 @@ import * as redisStore from 'cache-manager-redis-store'; // <-- ADD Redis Store 
 
 import { AuthModule } from './auth/auth.module';
 import { BookingModule } from './booking/booking.module';
+import { ConsultationModule } from './consultation/consultation.module';
+import { AuditModule } from './common/audit/audit.module';
 
 @Module({
   imports: [
@@ -42,6 +44,8 @@ import { BookingModule } from './booking/booking.module';
     // 4. Import application modules
     AuthModule,
     BookingModule,
+    ConsultationModule,
+    AuditModule,
   ],
 })
 export class AppModule {}
