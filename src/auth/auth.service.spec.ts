@@ -4,7 +4,6 @@ import { JwtService } from '@nestjs/jwt';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from './user.entity';
 
-
 describe('AuthService', () => {
   let service: AuthService;
 
@@ -28,11 +27,9 @@ describe('AuthService', () => {
         },
       ],
     }).compile();
-  
+
     service = module.get<AuthService>(AuthService);
   });
-  
-  
 
   it('should be defined', () => {
     expect(service).toBeDefined();

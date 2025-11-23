@@ -18,7 +18,9 @@ export class AuditService {
   ) {}
 
   async recordEvent(payload: AuditPayload): Promise<void> {
-    console.log(`[AUDIT] RECEIVED ASYNC EVENT: ${payload.eventType} for User: ${payload.userId}`);
+    console.log(
+      `[AUDIT] RECEIVED ASYNC EVENT: ${payload.eventType} for User: ${payload.userId}`,
+    );
 
     const log = this.auditLogRepository.create({
       user_id: payload.userId,

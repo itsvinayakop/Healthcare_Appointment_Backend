@@ -13,18 +13,18 @@ import { AuditModule } from './common/audit/audit.module';
 @Module({
   imports: [
     // 1. Load .env variables globally
-    ConfigModule.forRoot({ isGlobal: true }), 
-    
+    ConfigModule.forRoot({ isGlobal: true }),
+
     // 2. Set up PostgreSQL connection
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost', 
-      port: parseInt(process.env.POSTGRES_PORT || '5432', 10),      
+      host: 'localhost',
+      port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      autoLoadEntities: true, 
-      synchronize: true, 
+      autoLoadEntities: true,
+      synchronize: true,
     }),
 
     // 3. Configure Redis Caching Module (Critical for Latency/Scale)
@@ -40,7 +40,7 @@ import { AuditModule } from './common/audit/audit.module';
       }),
       inject: [ConfigService],
     }),
-    
+
     // 4. Import application modules
     AuthModule,
     BookingModule,

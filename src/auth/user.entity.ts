@@ -5,7 +5,7 @@ import { UserRole } from '../common/enums/user-role.enum';
 @Entity('users')
 export class User {
   // Use UUID for scalability (Architecture Task 3/4)
-  @PrimaryGeneratedColumn('uuid') 
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ unique: true })
@@ -13,9 +13,9 @@ export class User {
 
   // IMPORTANT: This column will store the hashed password (Security requirement )
   @Column()
-  password: string; 
+  password: string;
 
-  // Role for Role-Based Access Control (RBAC) 
+  // Role for Role-Based Access Control (RBAC)
   @Column({
     type: 'enum',
     enum: UserRole,

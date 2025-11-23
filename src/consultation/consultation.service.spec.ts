@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConsultationService } from './consultation.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Consultation } from '../consultation/consultation.entity'; 
-import { Prescription } from '../consultation/prescription.entity'; 
-import { AuditService } from '../common/audit/audit.service'; 
+import { Consultation } from '../consultation/consultation.entity';
+import { Prescription } from '../consultation/prescription.entity';
+import { AuditService } from '../common/audit/audit.service';
 
 describe('ConsultationService', () => {
   let service: ConsultationService;

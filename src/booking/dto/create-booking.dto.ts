@@ -2,7 +2,7 @@
 import { IsUUID, IsNotEmpty } from 'class-validator';
 
 export class CreateBookingDto {
-    @IsUUID()
-    @IsNotEmpty()
-    slotId: string;
+  @IsUUID()
+  @IsNotEmpty()
+  slotId: string;
 }

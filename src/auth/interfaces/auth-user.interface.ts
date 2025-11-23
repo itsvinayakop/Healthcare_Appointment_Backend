@@ -11,5 +11,5 @@ export interface AuthUser {
 
 // 2. Extends Express Request to include our AuthUser
 export interface AuthRequest extends Request {
-  user: AuthUser; 
+  user: AuthUser;
 }

@@ -22,23 +22,23 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       // 2. Configuration Options
       // Looks for the token in the Authorization: Bearer <token> header
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), 
-      
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+
       // FIX: Use the non-null assertion operator (!) on JWT_SECRET to resolve TypeScript error
-      secretOrKey: process.env.JWT_SECRET!, 
-      
+      secretOrKey: process.env.JWT_SECRET!,
+
       // We will let the token expire after the signOptions time (e.g., 7d)
-      ignoreExpiration: false, 
+      ignoreExpiration: false,
     });
   }
 
   // This function is executed if the token is valid (signature and expiration check passes)
   async validate(payload: JwtPayload) {
     // The returned object is attached to the request as req.user
-    return { 
-      userId: payload.sub, 
-      email: payload.email, 
-      role: payload.role 
+    return {
+      userId: payload.sub,
+      email: payload.email,
+      role: payload.role,
     };
   }
 }
