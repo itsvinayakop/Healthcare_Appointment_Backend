@@ -100,7 +100,6 @@ The backend follows a modular service architecture with separate domain-driven m
 | -------------- | ------ | ------------------ | ------------------------------------------------ |
 | Registration   | POST   | `/auth/register`   | bcrypt password hashing, input validation        |
 | Login          | POST   | `/auth/login`      | JWT-based authentication (user lifecycle)        |
-| Role Update    | POST   | `/auth/admin/role` | Access controlled via `@Roles(ADMIN)` (RBAC)     |
 
 ---
 

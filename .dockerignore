@@ -1,0 +1,32 @@
+# Dependencies & builds
+node_modules
+dist
+
+# Logs & temp
+npm-debug.log
+coverage
+
+# Env & secrets
+.env
+.env.*
+
+# Git
+.git
+.gitignore
+
+# Docs
+README.md
+*.md
+
+# IDE / Editor
+.vscode
+.idea
+
+# Lint & formatter configs
+.eslintrc.js
+.prettierrc
+
+# Tests (ignored for production Docker image)
+test
+**/*.spec.ts
+**/*.test.ts

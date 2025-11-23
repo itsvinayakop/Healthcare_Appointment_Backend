@@ -1,0 +1,91 @@
+name: CI/CD Pipeline - Amrutam Backend
+
+on:
+  push:
+    branches: [ main, staging ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    # If your tests need PostgreSQL, keep this block.
+    services:
+      postgres:
+        image: postgres:14-alpine
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U test"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Wait for PostgreSQL (if tests need DB)
+        run: |
+          for i in `seq 1 30`; do
+            pg_isready -h 127.0.0.1 -p 5432 && break
+            echo "⏳ Waiting for PostgreSQL to be ready..."
+            sleep 1
+          done
+        env:
+          PGPASSWORD: test
+
+      - name: Run Tests (Unit + Integration)
+        env:
+          DATABASE_URL: postgres://test:test@127.0.0.1:5432/testdb
+          NODE_ENV: test
+        run: npm run test:ci
+
+      - name: Run lint + type-check
+        run: |
+          npm run lint
+          npm run typecheck
+
+      - name: Build project
+        run: npm run build
+
+      - name: Build Docker image
+        run: docker build -t healthcare-backend:${{ github.sha }} .
+
+      - name: 📦 Push Docker Image (optional)
+        if: ${{ secrets.ECR_REGISTRY != '' }}
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ${{ secrets.ECR_REGISTRY }}/healthcare-backend:${{ github.sha }}
+
+  deploy_to_staging:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Simulated Cloud Deployment
+        run: |
+          echo "🚀 Deploying image healthcare-backend:${{ github.sha }} to staging..."
+          echo "Using Terraform / AWS / Cloud Run (placeholder)"
+          echo "✔️ Deployment simulation complete."
