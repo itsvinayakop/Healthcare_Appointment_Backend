@@ -84,7 +84,7 @@ npm run start:dev
 
 Your application will start at:
 
-👉 **[http://localhost:3000](http://localhost:3000)**
+👉 **[http://localhost:3000](http://localhost:8080)**
 
 ---
 
@@ -171,3 +171,7 @@ This system implements production-grade observability:
 
 The detailed Observability Strategy document is included in:
 
+___
+
+### Documentations:
+- **Architecture Document: https://docs.google.com/document/d/1X2qc1ZmN8t3kgjNLg8XKf9QUC0DOx8FhhEstJrWKL0s/edit?tab=t.0**
