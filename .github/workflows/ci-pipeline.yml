@@ -2,7 +2,6 @@ name: CI/CD Pipeline - Amrutam Backend
 
 on:
   push:
-    # Your repo uses 'master' as the default branch — include staging too if you use it
     branches: [ master, staging ]
   pull_request:
     # Run PR checks when PR targets master

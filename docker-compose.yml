@@ -21,9 +21,9 @@ services:
   # NEW: Backend application service
   backend:
     build:
-      context: . # Build from the current directory (where Dockerfile is)
+      context: . 
       dockerfile: Dockerfile
-    # In production, you would use 'image: your-registry/amrutam-backend:v1'
+    
     restart: always
     environment:
       # Pass environment variables to the backend container
@@ -33,7 +33,7 @@ services:
       REDIS_PORT: 6379
       JWT_SECRET: ${JWT_SECRET}
     ports:
-      - "3000:3000" # Map host port 3000 to container port 3000
+      - "3000:3000" 
     depends_on:
       - postgres
       - redis

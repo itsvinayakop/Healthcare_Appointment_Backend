@@ -1,9 +1,9 @@
 // src/app.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config'; // <-- ADD ConfigService
-import { CacheModule } from '@nestjs/cache-manager'; // <-- ADD CacheModule
-import * as redisStore from 'cache-manager-redis-store'; // <-- ADD Redis Store Library
+import { ConfigModule, ConfigService } from '@nestjs/config'; 
+import { CacheModule } from '@nestjs/cache-manager'; 
+import * as redisStore from 'cache-manager-redis-store'; 
 
 import { AuthModule } from './auth/auth.module';
 import { BookingModule } from './booking/booking.module';
@@ -12,7 +12,7 @@ import { AuditModule } from './common/audit/audit.module';
 
 @Module({
   imports: [
-    // 1. Load .env variables globally
+    
     ConfigModule.forRoot({ isGlobal: true }),
 
     // 2. Set up PostgreSQL connection
