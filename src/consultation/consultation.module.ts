@@ -7,20 +7,15 @@ import { ConsultationService } from './consultation.service';
 import { Consultation } from './consultation.entity';
 import { Prescription } from './prescription.entity';
 import { AuthModule } from '../auth/auth.module';
-import { AuditModule } from '../common/audit/audit.module'; 
+import { AuditModule } from '../common/audit/audit.module';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([Consultation, Prescription]),
 
-    TypeOrmModule.forFeature([
-      Consultation,
-      Prescription,
-      
-    ]),
-    
     AuthModule,
-    
-    AuditModule, 
+
+    AuditModule,
   ],
   controllers: [ConsultationController],
   providers: [ConsultationService],

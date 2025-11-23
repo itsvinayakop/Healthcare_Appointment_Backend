@@ -35,14 +35,16 @@ export class AuthService {
     const newUser = this.usersRepository.create({
       email,
       password: hashedPassword,
-      role: UserRole.PATIENT, 
+      role: UserRole.PATIENT,
     });
 
     return this.usersRepository.save(newUser);
   }
 
   // --- LOGIN METHOD (NEWLY ADDED) ---
-  async login(loginDto: LoginDto): Promise<{ token: string; user: Partial<User> }> {
+  async login(
+    loginDto: LoginDto,
+  ): Promise<{ token: string; user: Partial<User> }> {
     const { email, password } = loginDto;
 
     // 1. Find the user by email
@@ -59,17 +61,19 @@ export class AuthService {
     }
 
     // 3. Generate the payload for the token
-    const payload = { 
+    const payload = {
       sub: user.id, // Subject (user ID)
-      email: user.email, 
-      role: user.role 
+      email: user.email,
+      role: user.role,
     };
 
     // 4. Generate the JWT (The token is signed using the secret defined in AuthModule)
     const token = await this.jwtService.signAsync(payload);
 
     // 5. Return the token and safe user details (excluding password hash)
-    const { password: pw, ...safeUser } = user;
+    const safeUser = { ...user };
+    delete (safeUser as any).password;
+
     return { token, user: safeUser };
   }
 }

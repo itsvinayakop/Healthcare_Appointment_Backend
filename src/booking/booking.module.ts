@@ -11,13 +11,9 @@ import { AvailabilitySlot } from './availability-slot.entity';
 @Module({
   imports: [
     // 1. Link the new entities to the database connection
-    TypeOrmModule.forFeature([
-      Booking,
-      DoctorProfile,
-      AvailabilitySlot,
-    ]),
+    TypeOrmModule.forFeature([Booking, DoctorProfile, AvailabilitySlot]),
     // 2. Import AuthModule so we can use its Guards (JwtAuthGuard, RolesGuard)
-    AuthModule, 
+    AuthModule,
   ],
   controllers: [BookingController],
   providers: [BookingService],

@@ -16,12 +16,12 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       context.getHandler(),
       context.getClass(),
     ]);
-    
+
     // 2. If the route is marked public, allow access immediately, bypassing JWT check
     if (isPublic) {
       return true;
     }
-    
+
     // 3. If not public, proceed with standard JWT authentication check
     return super.canActivate(context);
   }
